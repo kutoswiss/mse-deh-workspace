@@ -90,5 +90,9 @@ The LAC instance is `cameraDmaLac`. Its 64 sampled bits are:
 | 1 | bus grant |
 | 0 | bus request |
 
-The desktop analyser application is not distributed in this repository pending confirmation
-of its redistribution licence.
+Import `logic_analyzer/camera_dma.toml` in the desktop analyser application. It defines these
+signal slices, selects 64 pre-trigger samples, and triggers on `begin transaction == 1`.
+
+The desktop application is available separately from
+[Codeberg](https://codeberg.org/simonlaube/logic-analyzer). The course installer clones and
+builds it under `~/EmbHW_Tools/logic-analyzer`.
