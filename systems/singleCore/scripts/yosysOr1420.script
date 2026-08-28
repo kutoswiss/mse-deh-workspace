@@ -1,0 +1,69 @@
+
+read_verilog ../../../modules/perf/verilog/perf.v
+read -sv ../../../modules/bios/verilog/bios1_rom.v
+read -sv ../../../modules/bios/verilog/bios.v
+read -sv ../../../modules/bus_arbiter/verilog/busArbiter.v
+read -sv ../../../modules/bus_arbiter/verilog/queueMemory.v
+
+
+read -sv ../../../modules/hdmi_320p/verilog/ram2kdp.v
+read -sv ../../../modules/hdmi_320p/verilog/video_640x480.v
+read -sv ../../../modules/hdmi_320p/verilog/fixedFramebufferDma320x240.v
+read -sv ../../../modules/hdmi_320p/verilog/screens.v
+
+read -sv ../../../modules/spi/verilog/spiShiftSingle.v
+read -sv ../../../modules/spi/verilog/spiShiftQuad.v
+read -sv ../../../modules/spi/verilog/spiBus.v
+read -sv ../../../modules/i2c/verilog/i2cMaster.v
+read -sv ../../../modules/i2c/verilog/i2cCustomInstr.v
+read -sv ../../../modules/delay/verilog/delayIse.v
+read -sv ../../../modules/swapbyteIse/verilog/swapByteIse.v
+read -sv ../../../modules/uart/verilog/baudGenerator.v
+read -sv ../../../modules/uart/verilog/uartFifoMemory.v
+read -sv ../../../modules/uart/verilog/uartRx.v
+read -sv ../../../modules/uart/verilog/uartTx.v
+read -sv ../../../modules/uart/verilog/uartRxFifo.v
+read -sv ../../../modules/uart/verilog/uartTxFifo.v
+read -sv ../../../modules/uart/verilog/uartBus.v
+read -sv ../../../modules/or1420/verilog/adder.v
+read -sv ../../../modules/or1420/verilog/dCacheSpm.v
+read -sv ../../../modules/or1420/verilog/dCache.v
+read -sv ../../../modules/or1420/verilog/decodeStage.v
+read -sv ../../../modules/or1420/verilog/executeStage.v
+read -sv ../../../modules/or1420/verilog/fetchStage.v
+read -sv ../../../modules/or1420/verilog/logicUnit.v
+read -sv ../../../modules/or1420/verilog/lutram_32x1.v
+read -sv ../../../modules/or1420/verilog/memoryStage.v
+read -sv ../../../modules/or1420/verilog/multiplier.v
+read -sv ../../../modules/or1420/verilog/or1420Top.v
+read -sv ../../../modules/or1420/verilog/regiserFile.v
+read -sv ../../../modules/or1420/verilog/shifter.v
+read -sv ../../../modules/or1420/verilog/sprUnit.v
+read -sv ../../../modules/sdram/verilog/sdramFifo.v
+read -sv ../../../modules/sdram/verilog/sdram.v
+read -sv ../../../modules/support/verilog/decimalCounter.v
+read -sv ../../../modules/support/verilog/processorId.v
+read -sv ../../../modules/support/verilog/synchroFlop.v
+
+
+ghdl --std=08 \
+  ../../../modules/support/vhdl/synchroFlop_VHDL.vhd -e synchroFlop_VHDL
+  
+ghdl --std=08 \
+  ../../../modules/support/vhdl/ram2kdp_VHDL.vhd -e dualPortRam2k_VHDL
+
+ghdl --std=08 -gclockFrequencyInHz=74250000 \
+  ../../../modules/camera/vhdl/camera.vhd -e camera
+
+
+read -sv ../../../modules/support/verilog/sram_16x32_dp_ar.v
+read -sv ../../../modules/support/verilog/sram_32x32_dp_ar.v
+read -sv ../../../modules/support/verilog/sram_512x32_dp.v
+read -sv ../../../modules/support/verilog/sram_512x32.v
+read -sv ../../../modules/support/verilog/sram_1024x16_dp.v
+read -sv ../../../modules/support/verilog/sram2048x8Dp.v
+read -sv ../../../modules/logic_analyzer/lac.v
+read -sv ../../../modules/logic_analyzer/lacAPI.v
+read -sv ../../../modules/logic_analyzer/semiDualPortSSRAM.v
+read -sv ../verilog/or1420SingleCore.v
+synth_ecp5 -top or1420SingleCore -json or1420SingleCore.json

@@ -1,0 +1,12 @@
+# FPGA build products
+systems/*/sandbox/*
+!systems/*/sandbox/.gitkeep
+
+# Software build products
+programs/*/build-*/
+
+# Editor and operating-system files
+.vscode/
+*.swp
+*~
+.DS_Store
