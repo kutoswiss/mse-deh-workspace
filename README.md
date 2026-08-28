@@ -14,6 +14,12 @@ It targets the GECKO5Education board and contains:
 GPIO and CRC peripherals are deliberately absent. They are developed incrementally during
 the course.
 
+This work is derived from the
+[EPFL-LAP CS476 reference project](https://github.com/EPFL-LAP/cs476) and is distributed
+under the MIT License. The original project is Copyright (c) 2025 EPFL LAP; course
+adaptations are Copyright (c) 2026 HEPIA CoRES. See `LICENSE` and the retained
+third-party notices for details.
+
 ## Repository layout
 
 - `modules/`: synthesizable IP blocks required by the reference system.
