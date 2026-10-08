@@ -1,0 +1,525 @@
+$date
+	Thu Oct  8 14:10:30 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module gpio_tb $end
+$var wire 32 ! gpioPins [31:0] $end
+$var wire 1 " endTransactionOut $end
+$var wire 1 # dataValidOut $end
+$var wire 32 $ addressDataOut [31:0] $end
+$var parameter 32 % BASE $end
+$var parameter 32 & PERIOD $end
+$var reg 32 ' addressDataIn [31:0] $end
+$var reg 1 ( beginTransactionIn $end
+$var reg 1 ) clock $end
+$var reg 1 * dataValidIn $end
+$var reg 32 + readDir [31:0] $end
+$var reg 1 , readNWriteIn $end
+$var reg 32 - readPin [31:0] $end
+$var reg 1 . reset $end
+$var integer 32 / phase [31:0] $end
+$scope module dut $end
+$var wire 32 0 addressDataIn [31:0] $end
+$var wire 1 1 addressHit $end
+$var wire 1 ( beginTransactionIn $end
+$var wire 1 ) clock $end
+$var wire 1 * dataValidIn $end
+$var wire 32 2 gpioDrive [31:0] $end
+$var wire 1 , readNWriteIn $end
+$var wire 1 . reset $end
+$var wire 32 3 gpioPins [31:0] $end
+$var parameter 32 4 BASE_ADDRESS $end
+$var parameter 2 5 IDLE $end
+$var parameter 32 6 INVERT_PINS $end
+$var parameter 32 7 LAST_ADDRESS $end
+$var parameter 2 8 READ_END $end
+$var parameter 3 9 REG_CLR $end
+$var parameter 3 : REG_DIR $end
+$var parameter 3 ; REG_PIN $end
+$var parameter 3 < REG_PORT $end
+$var parameter 3 = REG_SET $end
+$var parameter 2 > WAIT_WRITE $end
+$var reg 32 ? addressDataOut [31:0] $end
+$var reg 1 # dataValidOut $end
+$var reg 1 " endTransactionOut $end
+$var reg 32 @ gpioDirReg [31:0] $end
+$var reg 32 A gpioPinReg [31:0] $end
+$var reg 32 B gpioPortReg [31:0] $end
+$var reg 3 C selectedRegister [2:0] $end
+$var reg 2 D state [1:0] $end
+$scope begin pin_buffers[0] $end
+$var parameter 2 E n $end
+$upscope $end
+$scope begin pin_buffers[1] $end
+$var parameter 2 F n $end
+$upscope $end
+$scope begin pin_buffers[2] $end
+$var parameter 3 G n $end
+$upscope $end
+$scope begin pin_buffers[3] $end
+$var parameter 3 H n $end
+$upscope $end
+$scope begin pin_buffers[4] $end
+$var parameter 4 I n $end
+$upscope $end
+$scope begin pin_buffers[5] $end
+$var parameter 4 J n $end
+$upscope $end
+$scope begin pin_buffers[6] $end
+$var parameter 4 K n $end
+$upscope $end
+$scope begin pin_buffers[7] $end
+$var parameter 4 L n $end
+$upscope $end
+$scope begin pin_buffers[8] $end
+$var parameter 5 M n $end
+$upscope $end
+$scope begin pin_buffers[9] $end
+$var parameter 5 N n $end
+$upscope $end
+$scope begin pin_buffers[10] $end
+$var parameter 5 O n $end
+$upscope $end
+$scope begin pin_buffers[11] $end
+$var parameter 5 P n $end
+$upscope $end
+$scope begin pin_buffers[12] $end
+$var parameter 5 Q n $end
+$upscope $end
+$scope begin pin_buffers[13] $end
+$var parameter 5 R n $end
+$upscope $end
+$scope begin pin_buffers[14] $end
+$var parameter 5 S n $end
+$upscope $end
+$scope begin pin_buffers[15] $end
+$var parameter 5 T n $end
+$upscope $end
+$scope begin pin_buffers[16] $end
+$var parameter 6 U n $end
+$upscope $end
+$scope begin pin_buffers[17] $end
+$var parameter 6 V n $end
+$upscope $end
+$scope begin pin_buffers[18] $end
+$var parameter 6 W n $end
+$upscope $end
+$scope begin pin_buffers[19] $end
+$var parameter 6 X n $end
+$upscope $end
+$scope begin pin_buffers[20] $end
+$var parameter 6 Y n $end
+$upscope $end
+$scope begin pin_buffers[21] $end
+$var parameter 6 Z n $end
+$upscope $end
+$scope begin pin_buffers[22] $end
+$var parameter 6 [ n $end
+$upscope $end
+$scope begin pin_buffers[23] $end
+$var parameter 6 \ n $end
+$upscope $end
+$scope begin pin_buffers[24] $end
+$var parameter 6 ] n $end
+$upscope $end
+$scope begin pin_buffers[25] $end
+$var parameter 6 ^ n $end
+$upscope $end
+$scope begin pin_buffers[26] $end
+$var parameter 6 _ n $end
+$upscope $end
+$scope begin pin_buffers[27] $end
+$var parameter 6 ` n $end
+$upscope $end
+$scope begin pin_buffers[28] $end
+$var parameter 6 a n $end
+$upscope $end
+$scope begin pin_buffers[29] $end
+$var parameter 6 b n $end
+$upscope $end
+$scope begin pin_buffers[30] $end
+$var parameter 6 c n $end
+$upscope $end
+$scope begin pin_buffers[31] $end
+$var parameter 6 d n $end
+$upscope $end
+$upscope $end
+$scope task read_reg $end
+$var reg 32 e offset [31:0] $end
+$var integer 32 f which_read [31:0] $end
+$upscope $end
+$scope task write_reg $end
+$var reg 32 g offset [31:0] $end
+$var reg 32 h value [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b11111 d
+b11110 c
+b11101 b
+b11100 a
+b11011 `
+b11010 _
+b11001 ^
+b11000 ]
+b10111 \
+b10110 [
+b10101 Z
+b10100 Y
+b10011 X
+b10010 W
+b10001 V
+b10000 U
+b1111 T
+b1110 S
+b1101 R
+b1100 Q
+b1011 P
+b1010 O
+b1001 N
+b1000 M
+b111 L
+b110 K
+b101 J
+b100 I
+b11 H
+b10 G
+b1 F
+b0 E
+b1 >
+b11 =
+b10 <
+b1 ;
+b0 :
+b100 9
+b10 8
+b1010000000000000000000100011111 7
+b1 6
+b0 5
+b1010000000000000000000100000000 4
+b1010 &
+b1010000000000000000000100000000 %
+$end
+#0
+$dumpvars
+bx h
+bx g
+bx f
+bx e
+bx D
+bx C
+bx B
+bx A
+bx @
+bx ?
+bx 3
+bx 2
+01
+b0 0
+b0 /
+1.
+bx -
+0,
+bx +
+0*
+0)
+0(
+b0 '
+bx $
+x#
+x"
+bx !
+$end
+#5000
+bz !
+bz 3
+b11111111111111111111111111111111 2
+b0 $
+b0 ?
+0"
+0#
+b0 B
+b0 A
+b0 @
+b0 C
+b0 D
+1)
+#10000
+0)
+#15000
+1)
+#20000
+0)
+#25000
+1)
+#30000
+0)
+#35000
+1)
+#40000
+0.
+0)
+#45000
+1)
+#50000
+0)
+#55000
+1)
+#60000
+b111111110000000011111111 h
+b0 g
+b1 /
+0)
+#65000
+1)
+#70000
+11
+b1010000000000000000000100000000 '
+b1010000000000000000000100000000 0
+1(
+0)
+#75000
+b1 D
+1)
+#80000
+01
+b111111110000000011111111 '
+b111111110000000011111111 0
+1*
+0(
+0)
+#85000
+bz11111111zzzzzzzz11111111 !
+bz11111111zzzzzzzz11111111 3
+b0 D
+b111111110000000011111111 @
+1)
+#90000
+b0 '
+b0 0
+0*
+0)
+#95000
+b111111110000000011111111 A
+1)
+#100000
+b10101010101010101010101010101010 h
+b1000 g
+b10 /
+0)
+#105000
+1)
+#110000
+11
+b1010000000000000000000100001000 '
+b1010000000000000000000100001000 0
+1(
+0)
+#115000
+b1 D
+b10 C
+1)
+#120000
+01
+b10101010101010101010101010101010 '
+b10101010101010101010101010101010 0
+1*
+0(
+0)
+#125000
+bz01010101zzzzzzzz01010101 !
+bz01010101zzzzzzzz01010101 3
+b1010101010101010101010101010101 2
+b0 D
+b10101010101010101010101010101010 B
+1)
+#130000
+b0 '
+b0 0
+0*
+0)
+#135000
+b10101010000000001010101 A
+1)
+#140000
+b11 f
+b0 e
+b11 /
+0)
+#145000
+1)
+#150000
+11
+b1010000000000000000000100000000 '
+b1010000000000000000000100000000 0
+1,
+1(
+0)
+#155000
+b10 D
+1#
+b111111110000000011111111 $
+b111111110000000011111111 ?
+b0 C
+1)
+#160000
+01
+b0 '
+b0 0
+0(
+b111111110000000011111111 +
+0)
+#165000
+b0 D
+1"
+b0 $
+b0 ?
+0#
+1)
+#170000
+0,
+0)
+#175000
+0"
+1)
+#180000
+b100 f
+b100 e
+b100 /
+0)
+#185000
+1)
+#190000
+11
+b1010000000000000000000100000100 '
+b1010000000000000000000100000100 0
+1,
+1(
+0)
+#195000
+b10 D
+1#
+b10101010000000001010101 $
+b10101010000000001010101 ?
+b1 C
+1)
+#200000
+01
+b0 '
+b0 0
+0(
+b10101010000000001010101 -
+0)
+#205000
+b0 D
+1"
+b0 $
+b0 ?
+0#
+1)
+#210000
+0,
+0)
+#215000
+0"
+1)
+#220000
+b1111 h
+b1100 g
+b101 /
+0)
+#225000
+1)
+#230000
+11
+b1010000000000000000000100001100 '
+b1010000000000000000000100001100 0
+1(
+0)
+#235000
+b1 D
+b11 C
+1)
+#240000
+01
+b1111 '
+b1111 0
+1*
+0(
+0)
+#245000
+bz01010101zzzzzzzz01010000 !
+bz01010101zzzzzzzz01010000 3
+b1010101010101010101010101010000 2
+b0 D
+b10101010101010101010101010101111 B
+1)
+#250000
+b0 '
+b0 0
+0*
+0)
+#255000
+b10101010000000001010000 A
+1)
+#260000
+b11110000 h
+b10000 g
+b110 /
+0)
+#265000
+1)
+#270000
+11
+b1010000000000000000000100010000 '
+b1010000000000000000000100010000 0
+1(
+0)
+#275000
+b1 D
+b100 C
+1)
+#280000
+01
+b11110000 '
+b11110000 0
+1*
+0(
+0)
+#285000
+bz01010101zzzzzzzz11110000 !
+bz01010101zzzzzzzz11110000 3
+b1010101010101010101010111110000 2
+b0 D
+b10101010101010101010101000001111 B
+1)
+#290000
+b0 '
+b0 0
+0*
+0)
+#295000
+b10101010000000011110000 A
+1)
+#300000
+b111 /
+0)
+#305000
+1)
+#310000
+0)
+#315000
+1)
+#320000
+0)
+#325000
+1)
+#330000
+0)

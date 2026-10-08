@@ -38,7 +38,12 @@ module or1420SingleCore ( input wire         clock12MHz,
                                              camHsync,
                                              camVsync,
                                              biosBypass,
-                          input wire [7:0]   camData
+                          input wire [7:0]   camData,
+
+                          output wire [3:0] columnAddress,
+                          output wire [9:0] nRedRow,
+                          output wire [9:0] nGreenRow,
+                          output wire [9:0] nBlueRow
                            );
 
   wire        s_busIdle, s_snoopableBurst;
@@ -433,7 +438,30 @@ module or1420SingleCore ( input wire         clock12MHz,
       .endTransactionOut(s_perfEndTransaction),
       .addressDataOut(s_perfAddressData)
   );
-  
+
+  /*
+   *
+   * Here we define the gpio slave
+   *
+   */
+   wire [1:0] s_gpioUnused;
+   assign columnAddress = 4'b0000;
+
+   wire s_gpioDataValid, s_gpioEndTransaction;
+   wire [31:0] s_gpioAddressData;
+
+   gpioSlave #(.INVERT_PINS(1)) gpio1 (
+    .clock(s_systemClock),
+    .reset(s_reset),
+    .beginTransactionIn(s_beginTransaction),
+    .readNWriteIn(s_readNotWrite),
+    .dataValidIn(s_dataValid),
+    .addressDataIn(s_addressData),
+    .dataValidOut(s_gpioDataValid),
+    .endTransactionOut(s_gpioEndTransaction),
+    .addressDataOut(s_gpioAddressData),
+    .gpioPins({s_gpioUnused, nBlueRow, nGreenRow, nRedRow})
+   );
   
   /*
    *
@@ -578,13 +606,13 @@ module or1420SingleCore ( input wire         clock12MHz,
  assign s_beginTransaction = s_cpu1BeginTransaction | s_hdmiBeginTransaction | s_camMasterBeginTransaction;
  assign s_endTransaction   = s_cpu1EndTransaction | s_arbEndTransaction | s_biosEndTransaction | s_uartEndTransaction | s_perfEndTransaction |
                              s_sdramEndTransaction | s_hdmiEndTransaction | s_flashEndTransaction |
-                             s_camMasterEndTransaction | s_camSlaveEndTransaction | s_i2cEndTransaction;
+                             s_camMasterEndTransaction | s_camSlaveEndTransaction | s_i2cEndTransaction | s_gpioEndTransaction;
  assign s_addressData      = s_cpu1AddressData | s_biosAddressData | s_uartAddressData | s_perfAddressData | s_sdramAddressData | s_hdmiAddressData |
-                             s_flashAddressData | s_camMasterAddressData | s_camSlaveAddressData | s_i2cAddressData;
+                             s_flashAddressData | s_camMasterAddressData | s_camSlaveAddressData | s_i2cAddressData | s_gpioAddressData;
  assign s_byteEnables      = s_cpu1byteEnables | s_hdmiByteEnables | s_camMasterByteEnables;
  assign s_readNotWrite     = s_cpu1ReadNotWrite | s_hdmiReadNotWrite;
  assign s_dataValid        = s_cpu1DataValid | s_biosDataValid | s_uartDataValid | s_perfDataValid | s_sdramDataValid | s_hdmiDataValid |
-                             s_flashDataValid | s_camMasterDataValid | s_camSlaveDataValid | s_i2cDataValid;
+                             s_flashDataValid | s_camMasterDataValid | s_camSlaveDataValid | s_i2cDataValid | s_gpioDataValid;
  assign s_busy             = s_sdramBusy;
  assign s_burstSize        = s_cpu1BurstSize | s_hdmiBurstSize | s_camMasterBurstSize;
  

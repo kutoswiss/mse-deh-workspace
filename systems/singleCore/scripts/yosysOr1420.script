@@ -65,5 +65,6 @@ read -sv ../../../modules/support/verilog/sram2048x8Dp.v
 read -sv ../../../modules/logic_analyzer/lac.v
 read -sv ../../../modules/logic_analyzer/lacAPI.v
 read -sv ../../../modules/logic_analyzer/semiDualPortSSRAM.v
+read -sv ../../../modules/gpio/verilog/gpioSlave.v
 read -sv ../verilog/or1420SingleCore.v
 synth_ecp5 -top or1420SingleCore -json or1420SingleCore.json
