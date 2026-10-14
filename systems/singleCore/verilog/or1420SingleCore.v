@@ -462,6 +462,26 @@ module or1420SingleCore ( input wire         clock12MHz,
     .addressDataOut(s_gpioAddressData),
     .gpioPins({s_gpioUnused, nBlueRow, nGreenRow, nRedRow})
    );
+
+  /*
+   *
+   * Here we define the crc32 slave
+   *
+   */
+   wire s_crc32DataValid, s_crc32EndTransaction;
+   wire [31:0] s_crc32AddressData;
+
+   crc32Slave crc32(
+    .clock(s_systemClock),
+    .reset(s_reset),
+    .beginTransactionIn(s_beginTransaction),
+    .readNWriteIn(s_readNotWrite),
+    .dataValidIn(s_dataValid),
+    .addressDataIn(s_addressData),
+    .dataValidOut(s_crc32DataValid),
+    .endTransactionOut(s_crc32EndTransaction),
+    .addressDataOut(s_crc32AddressData),
+   );
   
   /*
    *
@@ -606,13 +626,13 @@ module or1420SingleCore ( input wire         clock12MHz,
  assign s_beginTransaction = s_cpu1BeginTransaction | s_hdmiBeginTransaction | s_camMasterBeginTransaction;
  assign s_endTransaction   = s_cpu1EndTransaction | s_arbEndTransaction | s_biosEndTransaction | s_uartEndTransaction | s_perfEndTransaction |
                              s_sdramEndTransaction | s_hdmiEndTransaction | s_flashEndTransaction |
-                             s_camMasterEndTransaction | s_camSlaveEndTransaction | s_i2cEndTransaction | s_gpioEndTransaction;
+                             s_camMasterEndTransaction | s_camSlaveEndTransaction | s_i2cEndTransaction | s_gpioEndTransaction | s_crc32EndTransaction;
  assign s_addressData      = s_cpu1AddressData | s_biosAddressData | s_uartAddressData | s_perfAddressData | s_sdramAddressData | s_hdmiAddressData |
-                             s_flashAddressData | s_camMasterAddressData | s_camSlaveAddressData | s_i2cAddressData | s_gpioAddressData;
+                             s_flashAddressData | s_camMasterAddressData | s_camSlaveAddressData | s_i2cAddressData | s_gpioAddressData | s_crc32AddressData;
  assign s_byteEnables      = s_cpu1byteEnables | s_hdmiByteEnables | s_camMasterByteEnables;
  assign s_readNotWrite     = s_cpu1ReadNotWrite | s_hdmiReadNotWrite;
  assign s_dataValid        = s_cpu1DataValid | s_biosDataValid | s_uartDataValid | s_perfDataValid | s_sdramDataValid | s_hdmiDataValid |
-                             s_flashDataValid | s_camMasterDataValid | s_camSlaveDataValid | s_i2cDataValid | s_gpioDataValid;
+                             s_flashDataValid | s_camMasterDataValid | s_camSlaveDataValid | s_i2cDataValid | s_gpioDataValid | s_crc32DataValid;
  assign s_busy             = s_sdramBusy;
  assign s_burstSize        = s_cpu1BurstSize | s_hdmiBurstSize | s_camMasterBurstSize;
  

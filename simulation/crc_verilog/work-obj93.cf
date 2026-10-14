@@ -1,0 +1,4 @@
+v 4
+file . "../../modules/crc/vhdl/crc32Core.vhd" "1ad0464517e4da067266773e5e693a1e6a2da426" "20261009154943.607":
+  entity crc32core at 2( 74) + 0 on 11;
+  architecture rtl of crc32core at 16( 396) + 0 on 12;
