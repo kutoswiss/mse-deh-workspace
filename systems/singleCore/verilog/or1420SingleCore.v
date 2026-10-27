@@ -488,9 +488,60 @@ module or1420SingleCore ( input wire         clock12MHz,
    * Here we define the crc32 dma 
    *
    */
-  wire s_crc32DmaMasterReqBus;
-  wire s_crc32DmaMasterBusGranted;
+
+  // crc32 dma master interface
+  wire        s_crc32DmaMasterReqBus;
+  wire        s_crc32DmaMasterBusGranted;
+  wire        s_crc32DmaMasterBeginTransaction;
+  wire        s_crc32DmaMasterReadNotWrite;
+  wire [3:0]  s_crc32DmaMasterByteEnables;
+  wire [31:0] s_crc32DmaMasterAddressData;
+  wire [7:0]  s_crc32DmaMasterBurstSize;
+
+  // crc32 dma slave interface
+  wire        s_crc32DmaSlaveDataValid;
+  wire        s_crc32DmaSlaveEndTransaction;
+  wire [31:0] s_crc32DmaSlaveAddressData;
+
   assign s_crc32DmaMasterReqBus = 1'd0;
+  assign s_crc32DmaMasterBeginTransaction = 1'd0;
+  assign s_crc32DmaMasterReadNotWrite = 1'd0;
+  assign s_crc32DmaMasterByteEnables = 4'd0;
+  assign s_crc32DmaMasterAddressData = 32'd0;
+  assign s_crc32DmaMasterBurstSize = 8'd0;
+
+  assign s_crc32DmaSlaveDataValid = 1'd0;
+  assign s_crc32DmaSlaveEndTransaction = 1'd0;
+  assign s_crc32DmaSlaveAddressData = 32'd0;
+
+
+  //crc32Dma crc32_dma(
+  // .clock(s_systemClock),
+  // .reset(s_reset),
+
+  // // Slave interface
+  // .slaveBeginTransactionIn(s_beginTransaction),
+  // .slaveReadNWriteIn(s_readNotWrite),
+  // .slaveDataValidIn(s_dataValid),
+  // .slaveAddressDataIn(s_addressData),
+
+  // .slaveDataValidOut(s_crc32DmaSlaveDataValid),
+  // .slaveEndTransactionOut(s_crc32DmaSlaveEndTransaction),
+  // .slaveAddressDataOut(s_crc32DmaSlaveAddressData),
+
+  // // DMA master interface
+  // .masterBusGrant(s_crc32DmaMasterBusGrant),
+  // .masterDataValidIn(s_dataValid),
+  // .masterAddressDataIn(s_addressData),
+  // .masterEndTransactionIn(s_endTransaction),
+
+  // .masterRequestBus(s_crc32DmaMasterReqBus),
+  // .masterBeginTransactionOut(s_crc32DmaMasterBeginTransaction),
+  // .masterReadNWriteOut(s_crc32DmaMasterReadNotWrite),
+  // .masterByteEnablesOut(s_crc32DmaMasterByteEnables),
+  // .masterAddressDataOut(s_crc32DmaMasterAddressData),
+  // .masterBurstSizeOut(s_crc32DmaMasterBurstSize)
+  //);
 
   /*
    *
@@ -643,7 +694,8 @@ module or1420SingleCore ( input wire         clock12MHz,
 
  assign s_beginTransaction = s_cpu1BeginTransaction | 
                              s_hdmiBeginTransaction | 
-                             s_camMasterBeginTransaction;
+                             s_camMasterBeginTransaction | 
+                             s_crc32DmaMasterBeginTransaction;
 
  assign s_endTransaction   = s_cpu1EndTransaction | 
                              s_arbEndTransaction | 
@@ -657,7 +709,8 @@ module or1420SingleCore ( input wire         clock12MHz,
                              s_camSlaveEndTransaction | 
                              s_i2cEndTransaction | 
                              s_gpioEndTransaction | 
-                             s_crc32EndTransaction;
+                             s_crc32EndTransaction |
+                             s_crc32DmaSlaveEndTransaction;
 
  assign s_addressData      = s_cpu1AddressData | 
                              s_biosAddressData | 
@@ -670,14 +723,18 @@ module or1420SingleCore ( input wire         clock12MHz,
                              s_camSlaveAddressData | 
                              s_i2cAddressData | 
                              s_gpioAddressData | 
-                             s_crc32AddressData;
+                             s_crc32AddressData |
+                             s_crc32DmaSlaveAddressData | 
+                             s_crc32DmaMasterAddressData;
 
  assign s_byteEnables      = s_cpu1byteEnables | 
                              s_hdmiByteEnables | 
-                             s_camMasterByteEnables;
+                             s_camMasterByteEnables | 
+                             s_crc32DmaMasterByteEnables;
 
  assign s_readNotWrite     = s_cpu1ReadNotWrite | 
-                             s_hdmiReadNotWrite;
+                             s_hdmiReadNotWrite |
+                             s_crc32DmaMasterReadNotWrite;
 
  assign s_dataValid        = s_cpu1DataValid | 
                              s_biosDataValid | 
@@ -690,12 +747,14 @@ module or1420SingleCore ( input wire         clock12MHz,
                              s_camSlaveDataValid | 
                              s_i2cDataValid | 
                              s_gpioDataValid | 
-                             s_crc32DataValid;
+                             s_crc32DataValid |
+                             s_crc32DmaSlaveDataValid;
 
  assign s_busy             = s_sdramBusy;
 
  assign s_burstSize        = s_cpu1BurstSize | 
                              s_hdmiBurstSize | 
-                             s_camMasterBurstSize;
+                             s_camMasterBurstSize |
+                             s_crc32DmaMasterBurstSize;
  
 endmodule
