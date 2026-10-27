@@ -68,5 +68,6 @@ read -sv ../../../modules/logic_analyzer/semiDualPortSSRAM.v
 read -sv ../../../modules/gpio/verilog/gpioSlave.v
 read -sv ../../../modules/crc/verilog/crc32Slave.v
 read -sv ../../../modules/crc/verilog/crc32Core.v
+read -sv ../../../modules/crc/verilog/crc32Dma.v
 read -sv ../verilog/or1420SingleCore.v
 synth_ecp5 -top or1420SingleCore -json or1420SingleCore.json
