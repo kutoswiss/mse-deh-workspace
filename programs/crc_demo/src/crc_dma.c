@@ -14,7 +14,7 @@
 #define CRC_DMA_CONTROL_START 1u
 #define CRC_DMA_STATUS_BUSY 0b01
 #define CRC_DMA_STATUS_DONE 0b10
-#define CRC_DMA_POLLING_DELAY_US 1000 // 1 ms
+#define CRC_DMA_POLLING_DELAY_US 10 // 10 us
 
 static volatile uint32_t *const crcDmaRegisters = (volatile uint32_t *)CRC_DMA_BASE;
 

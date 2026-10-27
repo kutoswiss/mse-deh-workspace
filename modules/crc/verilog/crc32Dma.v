@@ -61,6 +61,7 @@ reg [1:0]  irqControlReg;
 reg        busyReg;
 reg        doneReg;
 reg        issueReadReg;
+reg [7:0]  countBurstReg;
 
 // registers
 reg [2:0]  dmaStateReg;
@@ -216,16 +217,24 @@ always @(posedge clock) begin
                 masterByteEnablesOut <= 4'hF;
                 masterBurstSizeOut <= BURST_SIZE - 8'd1;
                 dmaStateReg <= DMA_WAIT_RESPONSE;
+                countBurstReg <= 8'd0;
             end
 
             DMA_WAIT_RESPONSE: begin
                 if (masterDataValidIn) begin
                     crc32DataIn <= masterAddressDataIn;
                     crc32DataValidIn <= 1'b1;
+                    currentAddressReg <= currentAddressReg + 4;
+                    countBurstReg <= countBurstReg + 1;
                 end
                 if (masterEndTransactionIn) begin
-                    currentAddressReg <= currentAddressReg + 4;
-                    dmaStateReg <= (currentAddressReg + 4 >= endAddressReg) ? DMA_FINISH : DMA_REQUEST_BUS;
+                    if (currentAddressReg + 4 >= endAddressReg) begin
+                        dmaStateReg <= DMA_FINISH;
+                    end else if (countBurstReg + 1 >= BURST_SIZE) begin
+                        dmaStateReg <= DMA_REQUEST_BUS;
+                    end else begin
+                        dmaStateReg <= DMA_WAIT_RESPONSE;
+                    end
                 end
             end
 
