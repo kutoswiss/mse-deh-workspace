@@ -1,6 +1,7 @@
 module crc32Dma #(
     parameter [31:0] BASE_ADDRESS = 32'h50000160,
-    parameter [31:0] LAST_ADDRESS = 32'h5000017F
+    parameter [31:0] LAST_ADDRESS = 32'h5000017F,
+    parameter [7:0]  BURST_SIZE = 8'd1,
 )(
     input wire        clock,
     input wire        reset,
@@ -213,6 +214,7 @@ always @(posedge clock) begin
                 masterReadNWriteOut <= 1'b1;
                 masterAddressDataOut <= currentAddressReg;
                 masterByteEnablesOut <= 4'hF;
+                masterBurstSizeOut <= BURST_SIZE - 8'd1;
                 dmaStateReg <= DMA_WAIT_RESPONSE;
             end
 

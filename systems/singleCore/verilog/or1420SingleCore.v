@@ -514,6 +514,7 @@ module or1420SingleCore ( input wire         clock12MHz,
   //assign s_crc32DmaSlaveEndTransaction = 1'd0;
   //assign s_crc32DmaSlaveAddressData = 32'd0;
 
+  //crc32Dma #(.BURST_SIZE(4)) crc32_dma(
   crc32Dma crc32_dma(
    .clock(s_systemClock),
    .reset(s_reset),

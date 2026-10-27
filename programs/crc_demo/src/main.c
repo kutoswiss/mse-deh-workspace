@@ -6,6 +6,7 @@
 #include <swap.h>
 
 #include "CRC.h"
+#include "crc_dma.h"
 
 #define DISPLAY_FRAMEBUFFER (*(volatile uint32_t *)0x5000002Cu)
 #define IMAGE_WIDTH 320u
@@ -15,7 +16,8 @@
 // #define CRC32_HW_TEST
 
 // #define CRC32_SW_CAM_TEST
-#define CRC32_HW_CAM_TEST
+//  #define CRC32_HW_CAM_TEST
+#define CRC32_HW_DMA_CAM_TEST
 
 static volatile uint16_t framebuffer[IMAGE_WIDTH * IMAGE_HEIGHT];
 
@@ -35,7 +37,7 @@ int main(void)
     clock_hz = perf_get_clock_frequency_hz();
     printf("Performance-counter clock: %u Hz\n", clock_hz);
 
-#if defined(CRC32_SW_CAM_TEST) || defined(CRC32_HW_CAM_TEST)
+#if defined(CRC32_SW_CAM_TEST) || defined(CRC32_HW_CAM_TEST) || defined(CRC32_HW_DMA_CAM_TEST)
     printf("Initialising the 320x240 camera...\n");
     initOv7670(QVGA, &camera_parameters);
     DISPLAY_FRAMEBUFFER = swap_u32((uint32_t)&framebuffer[0]);
@@ -71,6 +73,26 @@ int main(void)
         crc32_cycles = perf_finish();
 
         printf("CRC32 HW: %u cycles (%u.%03u ms)\n",
+               crc32_cycles,
+               crc32_cycles / (clock_hz / 1000u),
+               ((crc32_cycles % (clock_hz / 1000u)) * 1000u) / (clock_hz / 1000u));
+    }
+#endif
+
+#ifdef CRC32_HW_DMA_CAM_TEST
+    for (;;)
+    {
+        takeSingleImageBlocking((uint32_t)&framebuffer[0]);
+
+        perf_start();
+
+        crc_dma_start((uint32_t)&framebuffer[0], IMAGE_WIDTH * IMAGE_HEIGHT * 2);
+        crc_dma_wait_until_done();
+
+        crc32 = crc_dma_get_result();
+        crc32_cycles = perf_finish();
+
+        printf("CRC32 HW DMA: %u cycles (%u.%03u ms)\n",
                crc32_cycles,
                crc32_cycles / (clock_hz / 1000u),
                ((crc32_cycles % (clock_hz / 1000u)) * 1000u) / (clock_hz / 1000u));
