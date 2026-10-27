@@ -1,0 +1,105 @@
+[config]
+pre_trigger_samples = 50
+
+[config.trigger1]
+comparator = "=="
+
+[config.trigger2]
+comparator = "off"
+
+[config.trigger3]
+comparator = "off"
+
+[config.trigger4]
+comparator = "off"
+
+[[signals]]
+name = "Master Bus Request"
+lsb = 0
+msb = 0
+trig1_enabled = 0
+trig1_ref = "0"
+trig2_enabled = 0
+trig2_ref = "0"
+trig3_enabled = 0
+trig3_ref = "0"
+trig4_enabled = 0
+trig4_ref = "0"
+
+[[signals]]
+name = "Master Bus Granted"
+lsb = 1
+msb = 1
+trig1_enabled = 1
+trig1_ref = "1"
+trig2_enabled = 0
+trig2_ref = "0"
+trig3_enabled = 0
+trig3_ref = "0"
+trig4_enabled = 0
+trig4_ref = "0"
+
+[[signals]]
+name = "DMA Burst Size"
+lsb = 2
+msb = 9
+trig1_enabled = 0
+trig1_ref = "0"
+trig2_enabled = 0
+trig2_ref = "0"
+trig3_enabled = 0
+trig3_ref = "0"
+trig4_enabled = 0
+trig4_ref = "0"
+
+[[signals]]
+name = "Data Valid"
+lsb = 10
+msb = 10
+trig1_enabled = 0
+trig1_ref = "0"
+trig2_enabled = 0
+trig2_ref = "0"
+trig3_enabled = 0
+trig3_ref = "0"
+trig4_enabled = 0
+trig4_ref = "0"
+
+[[signals]]
+name = "Address Data"
+lsb = 11
+msb = 42
+trig1_enabled = 0
+trig1_ref = "0"
+trig2_enabled = 0
+trig2_ref = "0"
+trig3_enabled = 0
+trig3_ref = "0"
+trig4_enabled = 0
+trig4_ref = "0"
+
+[[signals]]
+name = "End Transaction"
+lsb = 43
+msb = 43
+trig1_enabled = 0
+trig1_ref = "0"
+trig2_enabled = 0
+trig2_ref = "0"
+trig3_enabled = 0
+trig3_ref = "0"
+trig4_enabled = 0
+trig4_ref = "0"
+
+[[signals]]
+name = "Unused"
+lsb = 44
+msb = 63
+trig1_enabled = 0
+trig1_ref = "0"
+trig2_enabled = 0
+trig2_ref = "0"
+trig3_enabled = 0
+trig3_ref = "0"
+trig4_enabled = 0
+trig4_ref = "0"

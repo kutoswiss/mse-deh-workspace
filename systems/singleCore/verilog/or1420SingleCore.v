@@ -402,22 +402,22 @@ module or1420SingleCore ( input wire         clock12MHz,
    *   [1]     bus grant
    *   [0]     bus request
    */
-  lac #(.sampleBitwidth(64)) cameraDmaLac (
-      .i_clock(s_systemClock),
-      .i_tappedWires({
-          13'd0,
-          s_camMasterAddressData,
-          s_camMasterBurstSize,
-          s_camMasterByteEnables,
-          s_busError,
-          s_busy,
-          s_camMasterDataValid,
-          s_camMasterEndTransaction,
-          s_camMasterBeginTransaction,
-          s_camMasterAckBus,
-          s_camMasterReqBus
-      })
-  );
+  //lac #(.sampleBitwidth(64)) cameraDmaLac (
+  //    .i_clock(s_systemClock),
+  //    .i_tappedWires({
+  //        13'd0,
+  //        s_camMasterAddressData,
+  //        s_camMasterBurstSize,
+  //        s_camMasterByteEnables,
+  //        s_busError,
+  //        s_busy,
+  //        s_camMasterDataValid,
+  //        s_camMasterEndTransaction,
+  //        s_camMasterBeginTransaction,
+  //        s_camMasterAckBus,
+  //        s_camMasterReqBus
+  //    })
+  //);
 
   /* MMIO performance counter at 0x50000120. */
   wire        s_perfEndTransaction;
@@ -542,6 +542,22 @@ module or1420SingleCore ( input wire         clock12MHz,
    .masterByteEnablesOut(s_crc32DmaMasterByteEnables),
    .masterAddressDataOut(s_crc32DmaMasterAddressData),
    .masterBurstSizeOut(s_crc32DmaMasterBurstSize)
+  );
+
+  /*
+   * Logic analyser connected to the CRC32 DMA write-master interface.
+   */
+  lac #(.sampleBitwidth(64)) crc32DmaLac (
+      .i_clock(s_systemClock),
+      .i_tappedWires({
+          19'd0,
+          s_endTransaction, // 1
+          s_addressData, // 32
+          s_dataValid, // 1
+          s_crc32DmaMasterBurstSize, // 8
+          s_crc32DmaMasterBusGranted, // 1
+          s_crc32DmaMasterReqBus // 1
+      })
   );
 
   /*
