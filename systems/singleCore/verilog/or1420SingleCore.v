@@ -503,45 +503,44 @@ module or1420SingleCore ( input wire         clock12MHz,
   wire        s_crc32DmaSlaveEndTransaction;
   wire [31:0] s_crc32DmaSlaveAddressData;
 
-  assign s_crc32DmaMasterReqBus = 1'd0;
-  assign s_crc32DmaMasterBeginTransaction = 1'd0;
-  assign s_crc32DmaMasterReadNotWrite = 1'd0;
-  assign s_crc32DmaMasterByteEnables = 4'd0;
-  assign s_crc32DmaMasterAddressData = 32'd0;
-  assign s_crc32DmaMasterBurstSize = 8'd0;
+  //assign s_crc32DmaMasterReqBus = 1'd0;
+  //assign s_crc32DmaMasterBeginTransaction = 1'd0;
+  //assign s_crc32DmaMasterReadNotWrite = 1'd0;
+  //assign s_crc32DmaMasterByteEnables = 4'd0;
+  //assign s_crc32DmaMasterAddressData = 32'd0;
+  //assign s_crc32DmaMasterBurstSize = 8'd0;
 
-  assign s_crc32DmaSlaveDataValid = 1'd0;
-  assign s_crc32DmaSlaveEndTransaction = 1'd0;
-  assign s_crc32DmaSlaveAddressData = 32'd0;
+  //assign s_crc32DmaSlaveDataValid = 1'd0;
+  //assign s_crc32DmaSlaveEndTransaction = 1'd0;
+  //assign s_crc32DmaSlaveAddressData = 32'd0;
 
+  crc32Dma crc32_dma(
+   .clock(s_systemClock),
+   .reset(s_reset),
 
-  //crc32Dma crc32_dma(
-  // .clock(s_systemClock),
-  // .reset(s_reset),
+   // Slave interface
+   .slaveBeginTransactionIn(s_beginTransaction),
+   .slaveReadNWriteIn(s_readNotWrite),
+   .slaveDataValidIn(s_dataValid),
+   .slaveAddressDataIn(s_addressData),
 
-  // // Slave interface
-  // .slaveBeginTransactionIn(s_beginTransaction),
-  // .slaveReadNWriteIn(s_readNotWrite),
-  // .slaveDataValidIn(s_dataValid),
-  // .slaveAddressDataIn(s_addressData),
+   .slaveDataValidOut(s_crc32DmaSlaveDataValid),
+   .slaveEndTransactionOut(s_crc32DmaSlaveEndTransaction),
+   .slaveAddressDataOut(s_crc32DmaSlaveAddressData),
 
-  // .slaveDataValidOut(s_crc32DmaSlaveDataValid),
-  // .slaveEndTransactionOut(s_crc32DmaSlaveEndTransaction),
-  // .slaveAddressDataOut(s_crc32DmaSlaveAddressData),
+   // DMA master interface
+   .masterBusGrant(s_crc32DmaMasterBusGranted),
+   .masterDataValidIn(s_dataValid),
+   .masterAddressDataIn(s_addressData),
+   .masterEndTransactionIn(s_endTransaction),
 
-  // // DMA master interface
-  // .masterBusGrant(s_crc32DmaMasterBusGrant),
-  // .masterDataValidIn(s_dataValid),
-  // .masterAddressDataIn(s_addressData),
-  // .masterEndTransactionIn(s_endTransaction),
-
-  // .masterRequestBus(s_crc32DmaMasterReqBus),
-  // .masterBeginTransactionOut(s_crc32DmaMasterBeginTransaction),
-  // .masterReadNWriteOut(s_crc32DmaMasterReadNotWrite),
-  // .masterByteEnablesOut(s_crc32DmaMasterByteEnables),
-  // .masterAddressDataOut(s_crc32DmaMasterAddressData),
-  // .masterBurstSizeOut(s_crc32DmaMasterBurstSize)
-  //);
+   .masterRequestBus(s_crc32DmaMasterReqBus),
+   .masterBeginTransactionOut(s_crc32DmaMasterBeginTransaction),
+   .masterReadNWriteOut(s_crc32DmaMasterReadNotWrite),
+   .masterByteEnablesOut(s_crc32DmaMasterByteEnables),
+   .masterAddressDataOut(s_crc32DmaMasterAddressData),
+   .masterBurstSizeOut(s_crc32DmaMasterBurstSize)
+  );
 
   /*
    *
