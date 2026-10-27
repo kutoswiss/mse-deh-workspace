@@ -482,7 +482,16 @@ module or1420SingleCore ( input wire         clock12MHz,
     .endTransactionOut(s_crc32EndTransaction),
     .addressDataOut(s_crc32AddressData),
    );
-  
+
+  /*
+   *
+   * Here we define the crc32 dma 
+   *
+   */
+  wire s_crc32DmaMasterReqBus;
+  wire s_crc32DmaMasterBusGranted;
+  assign s_crc32DmaMasterReqBus = 1'd0;
+
   /*
    *
    * Here the hdmi controller is defined
@@ -596,12 +605,14 @@ module or1420SingleCore ( input wire         clock12MHz,
  assign s_busRequests[30] = s_cpu1IcacheRequestBus;
  assign s_busRequests[29] = s_hdmiRequestBus;
  assign s_busRequests[28] = s_camMasterReqBus;
- assign s_busRequests[27:0] = 28'd0;
+ assign s_busRequests[27] = s_crc32DmaMasterReqBus;
+ assign s_busRequests[26:0] = 27'd0;
  
  assign s_cpu1DcacheBusAccessGranted = s_busGrants[31];
  assign s_cpu1IcacheBusAccessGranted = s_busGrants[30];
  assign s_hdmiBusgranted             = s_busGrants[29];
  assign s_camMasterAckBus            = s_busGrants[28];
+ assign s_crc32DmaMasterBusGranted   = s_busGrants[27];
 
  busArbiter arbiter ( .clock(s_systemClock),
                       .reset(s_reset),
@@ -622,18 +633,69 @@ module or1420SingleCore ( input wire         clock12MHz,
    * Here we define the bus architecture
    *
    */
- assign s_busError         = s_arbBusError | s_biosBusError | s_uartBusError | s_sdramBusError | s_flashBusError | s_i2cBusError | s_camSlaveBusError;
- assign s_beginTransaction = s_cpu1BeginTransaction | s_hdmiBeginTransaction | s_camMasterBeginTransaction;
- assign s_endTransaction   = s_cpu1EndTransaction | s_arbEndTransaction | s_biosEndTransaction | s_uartEndTransaction | s_perfEndTransaction |
-                             s_sdramEndTransaction | s_hdmiEndTransaction | s_flashEndTransaction |
-                             s_camMasterEndTransaction | s_camSlaveEndTransaction | s_i2cEndTransaction | s_gpioEndTransaction | s_crc32EndTransaction;
- assign s_addressData      = s_cpu1AddressData | s_biosAddressData | s_uartAddressData | s_perfAddressData | s_sdramAddressData | s_hdmiAddressData |
-                             s_flashAddressData | s_camMasterAddressData | s_camSlaveAddressData | s_i2cAddressData | s_gpioAddressData | s_crc32AddressData;
- assign s_byteEnables      = s_cpu1byteEnables | s_hdmiByteEnables | s_camMasterByteEnables;
- assign s_readNotWrite     = s_cpu1ReadNotWrite | s_hdmiReadNotWrite;
- assign s_dataValid        = s_cpu1DataValid | s_biosDataValid | s_uartDataValid | s_perfDataValid | s_sdramDataValid | s_hdmiDataValid |
-                             s_flashDataValid | s_camMasterDataValid | s_camSlaveDataValid | s_i2cDataValid | s_gpioDataValid | s_crc32DataValid;
+ assign s_busError = s_arbBusError | 
+                     s_biosBusError | 
+                     s_uartBusError | 
+                     s_sdramBusError | 
+                     s_flashBusError | 
+                     s_i2cBusError | 
+                     s_camSlaveBusError;
+
+ assign s_beginTransaction = s_cpu1BeginTransaction | 
+                             s_hdmiBeginTransaction | 
+                             s_camMasterBeginTransaction;
+
+ assign s_endTransaction   = s_cpu1EndTransaction | 
+                             s_arbEndTransaction | 
+                             s_biosEndTransaction | 
+                             s_uartEndTransaction | 
+                             s_perfEndTransaction |
+                             s_sdramEndTransaction | 
+                             s_hdmiEndTransaction | 
+                             s_flashEndTransaction |
+                             s_camMasterEndTransaction | 
+                             s_camSlaveEndTransaction | 
+                             s_i2cEndTransaction | 
+                             s_gpioEndTransaction | 
+                             s_crc32EndTransaction;
+
+ assign s_addressData      = s_cpu1AddressData | 
+                             s_biosAddressData | 
+                             s_uartAddressData | 
+                             s_perfAddressData | 
+                             s_sdramAddressData | 
+                             s_hdmiAddressData |
+                             s_flashAddressData | 
+                             s_camMasterAddressData | 
+                             s_camSlaveAddressData | 
+                             s_i2cAddressData | 
+                             s_gpioAddressData | 
+                             s_crc32AddressData;
+
+ assign s_byteEnables      = s_cpu1byteEnables | 
+                             s_hdmiByteEnables | 
+                             s_camMasterByteEnables;
+
+ assign s_readNotWrite     = s_cpu1ReadNotWrite | 
+                             s_hdmiReadNotWrite;
+
+ assign s_dataValid        = s_cpu1DataValid | 
+                             s_biosDataValid | 
+                             s_uartDataValid | 
+                             s_perfDataValid | 
+                             s_sdramDataValid | 
+                             s_hdmiDataValid |
+                             s_flashDataValid | 
+                             s_camMasterDataValid | 
+                             s_camSlaveDataValid | 
+                             s_i2cDataValid | 
+                             s_gpioDataValid | 
+                             s_crc32DataValid;
+
  assign s_busy             = s_sdramBusy;
- assign s_burstSize        = s_cpu1BurstSize | s_hdmiBurstSize | s_camMasterBurstSize;
+
+ assign s_burstSize        = s_cpu1BurstSize | 
+                             s_hdmiBurstSize | 
+                             s_camMasterBurstSize;
  
 endmodule
