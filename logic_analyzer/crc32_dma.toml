@@ -79,7 +79,7 @@ trig4_enabled = 0
 trig4_ref = "0"
 
 [[signals]]
-name = "End Transaction"
+name = "Begin Transaction"
 lsb = 43
 msb = 43
 trig1_enabled = 0
@@ -92,9 +92,9 @@ trig4_enabled = 0
 trig4_ref = "0"
 
 [[signals]]
-name = "Unused"
+name = "End Transaction"
 lsb = 44
-msb = 63
+msb = 44
 trig1_enabled = 0
 trig1_ref = "0"
 trig2_enabled = 0

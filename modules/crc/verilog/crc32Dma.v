@@ -228,9 +228,9 @@ always @(posedge clock) begin
                     countBurstReg <= countBurstReg + 1;
                 end
                 if (masterEndTransactionIn) begin
-                    if (currentAddressReg + 4 >= endAddressReg) begin
+                    if (currentAddressReg >= endAddressReg) begin
                         dmaStateReg <= DMA_FINISH;
-                    end else if (countBurstReg + 1 >= BURST_SIZE) begin
+                    end else if (countBurstReg >= BURST_SIZE) begin
                         dmaStateReg <= DMA_REQUEST_BUS;
                     end else begin
                         dmaStateReg <= DMA_WAIT_RESPONSE;
